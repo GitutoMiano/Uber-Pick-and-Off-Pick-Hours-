@@ -54,7 +54,7 @@ ggplot(hourly_data, aes(hour, Total)) +
         plot.subtitle = element_text(hjust = 0.5)) + 
   scale_y_continuous(labels=comma)
 month_hour_data <- Combined_data %>% group_by(Month, hour) %>%  dplyr::summarize(Total = n())
-
+head(month_hour_data )
 ggplot(month_hour_data, aes(hour, Total, fill=Month)) + 
   geom_bar(stat = "identity") + 
   ggtitle("Trips by Hour and Month") + 
@@ -67,3 +67,18 @@ ggplot(day_data, aes(Day, Trips)) +
   scale_y_continuous(labels = comma)
 day_month_data <-Combined_data %>% group_by(Day_Of_Week, Month) %>% dplyr::summarize(Trips = n())
 day_month_data
+ggplot(day_month_data, aes(Day_of_Week, Trips, fill = Month)) + 
+  geom_bar(stat = "identity",fill= "orange") + 
+  ggtitle("Trips by Day and Month") + 
+  scale_y_continuous(labels = comma) + 
+  scale_fill_manual(values = colors)
+#Number of Trips place during months in a year
+month_data <- Combined_data %>% group_by(Month) %>% dplyr::summarize(Total = n())
+
+month_data
+ggplot(month_data, aes(Month, Total, fill = Month)) + 
+  geom_bar(stat = "Identity") + 
+  ggtitle("Trips in a month") + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(labels = comma) + 
+  scale_fill_manual(values = colors)
