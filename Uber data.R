@@ -44,3 +44,26 @@ head(Combined_data)
 hourly_data <- Combined_data %>% group_by(hour) %>% dplyr::summarize(Total = n())
 head(hourly_data)
 datatable(hourly_data)
+ggplot(hourly_data, aes(hour, Total)) + 
+  geom_bar(stat="identity", 
+           fill="steelblue", 
+           color="red") + 
+  ggtitle("Trips Every Hour", subtitle = "aggregated today") + 
+  theme(legend.position = "none", 
+        plot.title = element_text(hjust = 0.5), 
+        plot.subtitle = element_text(hjust = 0.5)) + 
+  scale_y_continuous(labels=comma)
+month_hour_data <- Combined_data %>% group_by(Month, hour) %>%  dplyr::summarize(Total = n())
+
+ggplot(month_hour_data, aes(hour, Total, fill=Month)) + 
+  geom_bar(stat = "identity") + 
+  ggtitle("Trips by Hour and Month") + 
+  scale_y_continuous(labels = comma)
+day_data <- Combined_data %>% group_by(Day) %>% dplyr::summarize(Trips = n())
+ggplot(day_data, aes(Day, Trips)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  ggtitle("Trips by day of the month") + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(labels = comma)
+day_month_data <-Combined_data %>% group_by(Day_Of_Week, Month) %>% dplyr::summarize(Trips = n())
+day_month_data
